@@ -13,7 +13,7 @@ class authorsController extends Controller
      */
     public function index()
     {
-        //
+        return view('authors.index');
     }
 
     /**
