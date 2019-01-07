@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Author extends Model
 {
     // Table Name
-    protected $table = 'books';
+    protected $table = 'authors';
     // Primary Key
     public $primaryKey = 'id';
     // Timestamps
