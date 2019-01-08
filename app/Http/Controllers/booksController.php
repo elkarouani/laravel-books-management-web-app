@@ -28,7 +28,7 @@ class booksController extends Controller
     {
         $authors = Author::pluck('name', 'id');
 
-        return view('books.create', compact('id', 'authors'));
+        return view('books.create', compact('authors'));
     }
 
     /**
@@ -74,9 +74,8 @@ class booksController extends Controller
     public function edit($id)
     {
         $book = Book::find($id);
-
-        // Check for correct user id
-        return view('books.edit')->with('book', $book);
+        $author = Author::pluck('name', 'id');
+        return view('books.edit', compact('book', 'author'));
     }
 
     /**
@@ -90,12 +89,12 @@ class booksController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'author_id' => 'required'
+            'author' => 'required'
         ]);
 
         $book = Book::find($id);
         $book->title = $request->input('title');
-        $book->author_id = $request->input('author_id');
+        $book->author_id = $request->input('author');
         $book->save();
 
         return redirect('/books');

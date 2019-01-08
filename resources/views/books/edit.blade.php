@@ -9,7 +9,7 @@
 		</div>
 		<div class="form-group">
 			{{Form::label('author', 'Author')}}
-			{{Form::text('author_id', $book->author_id, ['class' => 'form-control', 'placeholder' => 'Author ID'])}}
+			{{Form::select('author', $author, null, ['class' => 'form-control', 'placeholder' => 'Author'])}}
 		</div>
 		{{Form::hidden('_method', 'PUT')}}
 		{{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
