@@ -12,7 +12,6 @@
     	<div>@include('inc.navbar')</div>
     	<div class="container">
     		<br>
-            @include('inc.messages')
         	@yield('content')
     	</div>
         

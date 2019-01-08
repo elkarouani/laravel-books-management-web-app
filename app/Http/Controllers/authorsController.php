@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Author;
+use App\Book;
 
 class authorsController extends Controller
 {
@@ -13,7 +15,8 @@ class authorsController extends Controller
      */
     public function index()
     {
-        return view('authors.index');
+        $authors = Author::orderBy('id', 'asc')->paginate(3);
+        return view('authors.index')->with('authors', $authors);
     }
 
     /**
@@ -23,7 +26,7 @@ class authorsController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -34,7 +37,15 @@ class authorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $author = new Author;
+        $author->name = $request->input('name');
+        $author->save();
+
+        return redirect('/authors');
     }
 
     /**
@@ -45,7 +56,8 @@ class authorsController extends Controller
      */
     public function show($id)
     {
-        //
+        $books = Book::where('author_id', $id)->get();
+        return view('authors.show')->with('books', $books);
     }
 
     /**
@@ -56,7 +68,10 @@ class authorsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $author = Author::find($id);
+
+        // Check for correct user id
+        return view('authors.edit')->with('author', $author);
     }
 
     /**
@@ -68,7 +83,15 @@ class authorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $author = Author::find($id);
+        $author->name = $request->input('name');
+        $author->save();
+
+        return redirect('/authors');
     }
 
     /**
@@ -79,6 +102,12 @@ class authorsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $author = Author::find($id);
+        $books = Book::where('author_id', $id)->get();
+        foreach ($books as $book) {
+            $book->delete();
+        }
+        $author->delete();
+        return redirect('/authors');
     }
 }
