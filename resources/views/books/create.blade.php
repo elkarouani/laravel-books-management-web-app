@@ -14,10 +14,7 @@
 				</div>
 				<div class="form-group">
 					{{Form::label('author', 'Author : ')}}
-					{{Form::select('author', [
-						'',
-						'Authers' => $data
-					], '', ['class' => 'form-control'])}}
+					{{Form::select('author', $authors, null, ['class' => 'form-control', 'placeholder' => 'Author'])}}
 				</div>
 				<div class="text-center">
 					{{Form::submit('Submit', ['class'=>'btn btn-primary'])}}

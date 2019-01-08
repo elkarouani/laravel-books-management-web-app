@@ -26,14 +26,9 @@ class booksController extends Controller
      */
     public function create()
     {
-        $authors = Author::orderBy('id', 'asc')->get();
-        $data = [];
-        $index = 0;
-        foreach ($authors as $author) {
-            $data[$index] = $author->name;
-            $index++;
-        }
-        return view('books.create')->with('data', $data);
+        $authors = Author::pluck('name', 'id');
+
+        return view('books.create', compact('id', 'authors'));
     }
 
     /**
@@ -51,8 +46,7 @@ class booksController extends Controller
 
         $book = new Book;
         $book->title = $request->input('title');
-        $id = $request->input('author') + 1;
-        $book->author_id = $id;
+        $book->author_id = $request->input('author');
         $book->release_date = date('Y-m-d');
         $book->save();
 
