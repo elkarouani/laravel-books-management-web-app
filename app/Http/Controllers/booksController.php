@@ -41,13 +41,14 @@ class booksController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'author' => 'required'
+            'author' => 'required',
+            'released_date' => 'required'
         ]);
 
         $book = new Book;
         $book->title = $request->input('title');
         $book->author_id = $request->input('author');
-        $book->release_date = date('Y-m-d');
+        $book->release_date = $request->input('released_date');
         $book->save();
 
         return redirect('/books');
@@ -89,12 +90,14 @@ class booksController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'author' => 'required'
+            'author' => 'required',
+            'released_date' => 'required'
         ]);
 
         $book = Book::find($id);
         $book->title = $request->input('title');
         $book->author_id = $request->input('author');
+        $book->release_date = $request->input('released_date');
         $book->save();
 
         return redirect('/books');
